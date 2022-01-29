@@ -5,34 +5,34 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
     public $user;
 
-     public function __construct()
+    public function __construct()
     {
 
         $this->middleware(function ($request, $next) {
             $this->user = Auth::guard('web')->user();
             return $next($request);
         });
-    } 
+    }
 
     public function index()
     {
         if (is_null($this->user)) {
-        abort(403, 'Sorry !! You are unauthorized to view any user !');
+            abort(403, 'Sorry !! You are unauthorized to view any user !');
         }
-        if ($this->user->can('user.view') || $this->user->can('user.create')|| $this->user->can('user.edit')|| $this->user->can('user.delete')) {
+        if ($this->user->can('user.view') || $this->user->can('user.create') || $this->user->can('user.edit') || $this->user->can('user.delete')) {
             $users = User::all();
-        return view('backend.pages.users.index', compact('users'));
-            
+            return view('backend.pages.users.index', compact('users'));
+
         }
-        
+
     }
 
     /**
@@ -42,8 +42,9 @@ class UsersController extends Controller
      */
     public function create()
     {
+
         if (is_null($this->user) || !$this->user->can('user.create')) {
-        abort(403, 'Sorry !! You are unauthorized to create any user !');
+            abort(403, 'Sorry !! You are unauthorized to create any user !');
         }
 
         $roles = Role::all();
@@ -101,7 +102,7 @@ class UsersController extends Controller
     public function edit($id)
     {
         if (is_null($this->user) || !$this->user->can('user.edit')) {
-        abort(403, 'Sorry !! You are unauthorized to edit any user !');
+            abort(403, 'Sorry !! You are unauthorized to edit any user !');
         }
 
         $user = User::find($id);
@@ -133,7 +134,7 @@ class UsersController extends Controller
         if ($request->password) {
             $user->password = Hash::make($request->password);
         }
-        $user->save();
+        $user->update();
 
         $user->roles()->detach();
         if ($request->roles) {
@@ -153,7 +154,7 @@ class UsersController extends Controller
     public function destroy($id)
     {
         if (is_null($this->user) || !$this->user->can('user.delete')) {
-        abort(403, 'Sorry !! You are unauthorized to delete any user !');
+            abort(403, 'Sorry !! You are unauthorized to delete any user !');
         }
 
         $user = User::find($id);

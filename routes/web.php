@@ -14,14 +14,27 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
- Route::get('/', function () {
-return view('welcome');
-}); 
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Auth::routes(['register' => false]);
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/dashboard', 'Backend\DashboardController@index')->name('admin.dashboard');
     Route::resource('roles', 'Backend\RolesController', ['names' => 'admin.roles']);
+    Route::resource('divisions', 'Backend\DivisionController', ['names' => 'admin.divisions']);
+    Route::post('division-status/{id}', 'Backend\DivisionController@changeStatus')->name('admin.divisions.status');
     Route::resource('users', 'Backend\UsersController', ['names' => 'admin.users']);
 });
+
+/* Route::get('/permission', function () {
+$data = array(
+array('name' => 'division.view', 'group_name' => 'division', 'guard_name' => 'web'),
+array('name' => 'division.create', 'group_name' => 'division', 'guard_name' => 'web'),
+array('name' => 'division.edit', 'group_name' => 'division', 'guard_name' => 'web'),
+array('name' => 'division.delete', 'group_name' => 'division', 'guard_name' => 'web'),
+);
+DB::table('permissions')->insert($data);
+});
+ */
