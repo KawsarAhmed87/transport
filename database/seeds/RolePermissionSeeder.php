@@ -22,7 +22,6 @@ class RolePermissionSeeder extends Seeder
         // Permission List as array
         $permissions = [
 
-            
             [
                 'group_name' => 'role',
                 'permissions' => [
@@ -78,7 +77,41 @@ class RolePermissionSeeder extends Seeder
                     'brand.delete',
                 ],
             ],
-            
+
+            [
+                'group_name' => 'vehicle-type',
+                'permissions' => [
+                    // brand Permissions
+                    'vehicletype.view',
+                    'vehicletype.create',
+                    'vehicletype.edit',
+                    'vehicletype.delete',
+                ],
+
+            ],
+
+            [
+                'group_name' => 'service-type',
+                'permissions' => [
+                    // brand Permissions
+                    'servicetype.view',
+                    'servicetype.create',
+                    'servicetype.edit',
+                    'servicetype.delete',
+                ],
+            ],
+
+            [
+                'group_name' => 'unit',
+                'permissions' => [
+                    // brand Permissions
+                    'unit.view',
+                    'unit.create',
+                    'unit.edit',
+                    'unit.delete',
+                ],
+            ],
+
         ];
 
         // Create and Assign Permissions

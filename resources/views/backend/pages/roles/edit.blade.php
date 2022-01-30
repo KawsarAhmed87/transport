@@ -68,7 +68,7 @@
                               
                               <div class="col-3">
                                   <div class="form-check">
-                                      <input type="checkbox" class="form-check-input" id="{{ $i }}Management" value="{{ $group->name }}" onclick="checkPermissionByGroup('role-{{ $i }}-management-checkbox', this)" {{ App\User::roleHasPermissions($role, $permissions) ? 'checked' : '' }}>
+                                      <input type="checkbox" class="form-check-input" id="{{ $i }}Management" value="{{ $group->name }}" onclick="checkPermissionByGroup('role-{{ $i }}-management-checkbox', this)" {{ App\User::roleHasPermissions($role, $permissions) ? 'checked' : '' }}> All
                                       <label class="form-check-label" for="checkPermission">{{ $group->name }}</label>
                                   </div>
                               </div>

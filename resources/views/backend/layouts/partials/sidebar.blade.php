@@ -67,6 +67,14 @@
                 </a>
               </li>
               @endif
+              @if ($admin->can('brand.create') || $admin->can('brand.view') ||  $admin->can('brand.edit') ||  $admin->can('brand.delete'))
+              <li class="nav-item">
+                <a href="{{route('admin.brands.index')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Brand</p>
+                </a>
+              </li>
+              @endif
 
               @if ($admin->can('colour.create') || $admin->can('colour.view') ||  $admin->can('colour.edit') ||  $admin->can('colour.delete'))
               <li class="nav-item">
@@ -77,14 +85,34 @@
               </li>
               @endif
 
-              @if ($admin->can('brand.create') || $admin->can('brand.view') ||  $admin->can('brand.edit') ||  $admin->can('brand.delete'))
+              @if ($admin->can('vehicletype.create') || $admin->can('vehicletype.view') ||  $admin->can('vehicletype.edit') ||  $admin->can('vehicletype.delete'))
               <li class="nav-item">
-                <a href="{{route('admin.brands.index')}}" class="nav-link">
+                <a href="{{route('admin.vehicletypes.index')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Brand</p>
+                  <p>Vehicle type</p>
                 </a>
               </li>
               @endif
+
+              @if ($admin->can('servicetype.create') || $admin->can('servicetype.view') ||  $admin->can('servicetype.edit') ||  $admin->can('servicetype.delete'))
+              <li class="nav-item">
+                <a href="{{route('admin.servicetypes.index')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Service type</p>
+                </a>
+              </li>
+              @endif
+
+              @if ($admin->can('unit.create') || $admin->can('unit.view') ||  $admin->can('unit.edit') ||  $admin->can('unit.delete'))
+              <li class="nav-item">
+                <a href="{{route('admin.units.index')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Unit</p>
+                </a>
+              </li>
+              @endif
+
+              
            
             </ul>
           </li>

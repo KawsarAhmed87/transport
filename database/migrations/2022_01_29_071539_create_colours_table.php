@@ -15,7 +15,7 @@ class CreateColoursTable extends Migration
     {
         Schema::create('colours', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->timestamps();
         });
     }

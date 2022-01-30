@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Model\Unit;
+use App\Model\Servicetype;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class UnitController extends Controller
+class servicetypeController extends Controller
 {
     public $user;
 
@@ -23,11 +23,11 @@ class UnitController extends Controller
     public function index()
     {
         if (is_null($this->user)) {
-            abort(403, 'Sorry !! You are unauthorized to view any unit !');
+            abort(403, 'Sorry !! You are unauthorized to view any service type !');
         }
-        if ($this->user->can('unit.view') || $this->user->can('unit.create') || $this->user->can('unit.edit') || $this->user->can('unit.delete')) {
-            $units = Unit::all();
-            return view('backend.pages.units.index', compact('units'));
+        if ($this->user->can('servicetype.view') || $this->user->can('servicetype.create') || $this->user->can('servicetype.edit') || $this->user->can('servicetype.delete')) {
+            $servicetypes = Servicetype::all();
+            return view('backend.pages.servicetypes.index', compact('servicetypes'));
 
         } else {
             return redirect()->route('admin.dashboard');
@@ -41,10 +41,10 @@ class UnitController extends Controller
      */
     public function create()
     {
-        if (is_null($this->user) || !$this->user->can('unit.create')) {
-            abort(403, 'Sorry !! You are unauthorized to create any unit !');
+        if (is_null($this->user) || !$this->user->can('servicetype.create')) {
+            abort(403, 'Sorry !! You are unauthorized to create any service type !');
         }
-        return view('backend.pages.units.create');
+        return view('backend.pages.servicetypes.create');
     }
 
     /**
@@ -57,16 +57,16 @@ class UnitController extends Controller
     {
         // Validation Data
         $request->validate([
-            'name' => 'required|max:100|unique:units',
+            'name' => 'required|max:100|unique:servicetypes',
         ]);
 
         // Create New User
-        $data = new Unit();
+        $data = new Servicetype();
         $data->name = $request->name;
         $data->save();
 
-        session()->flash('success', 'Unit has been created !!');
-        return redirect()->route('admin.units.index');
+        session()->flash('success', 'Service type has been created !!');
+        return redirect()->route('admin.servicetypes.index');
     }
 
     /**
@@ -88,12 +88,12 @@ class UnitController extends Controller
      */
     public function edit($id)
     {
-        if (is_null($this->user) || !$this->user->can('unit.edit')) {
-            abort(403, 'Sorry !! You are unauthorized to edit any unit !');
+        if (is_null($this->user) || !$this->user->can('servicetype.edit')) {
+            abort(403, 'Sorry !! You are unauthorized to edit any service type !');
         }
 
-        $unit = Unit::find($id);
-        return view('backend.pages.units.edit', compact('unit'));
+        $servicetype = Servicetype::find($id);
+        return view('backend.pages.servicetypes.edit', compact('servicetype'));
     }
 
     /**
@@ -106,18 +106,18 @@ class UnitController extends Controller
     public function update(Request $request, $id)
     {
         // Create New User
-        $data = Unit::find($id);
+        $data = Servicetype::find($id);
 
         // Validation Data
         $request->validate([
-            'name' => 'required|max:50|unique:units,name,' . $id,
+            'name' => 'required|max:50|unique:servicetypes,name,' . $id,
         ]);
 
         $data->name = $request->name;
         $data->update();
 
-        session()->flash('info', 'Unit name has been updated !!');
-        return redirect()->route('admin.units.index');
+        session()->flash('info', 'service type name has been updated !!');
+        return redirect()->route('admin.servicetypes.index');
     }
 
     /**
@@ -128,16 +128,16 @@ class UnitController extends Controller
      */
     public function destroy($id)
     {
-        if (is_null($this->user) || !$this->user->can('unit.delete')) {
-            abort(403, 'Sorry !! You are unauthorized to delete any unit !');
+        if (is_null($this->user) || !$this->user->can('servicetype.delete')) {
+            abort(403, 'Sorry !! You are unauthorized to delete any service type !');
         }
 
-        $data = Unit::find($id);
+        $data = Servicetype::find($id);
         if (!is_null($data)) {
             $data->delete();
         }
 
-        session()->flash('delete', 'Unit has been deleted !!');
+        session()->flash('delete', 'Service type has been deleted !!');
         return back();
     }
 }

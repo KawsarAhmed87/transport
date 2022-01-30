@@ -28,6 +28,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('users', 'Backend\UsersController', ['names' => 'admin.users']);
     Route::resource('colours', 'Backend\ColourController', ['names' => 'admin.colours']);
     Route::resource('brands', 'Backend\BrandController', ['names' => 'admin.brands']);
+    Route::resource('vehicle-type', 'Backend\VehicleTypeController', ['names' => 'admin.vehicletypes']);
+    Route::resource('service-type', 'Backend\ServiceTypeController', ['names' => 'admin.servicetypes']);
+    Route::resource('units', 'Backend\UnitController', ['names' => 'admin.units']);
+
 });
-
-

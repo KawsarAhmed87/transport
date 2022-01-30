@@ -43,7 +43,6 @@ class User extends Authenticatable
         $permission_groups = DB::table('permissions')
             ->select('group_name as name')
             ->groupBy('group_name')
-            ->orderByDesc('group_name')
             ->get();
         return $permission_groups;
     }
