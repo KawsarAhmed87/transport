@@ -26,15 +26,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('divisions', 'Backend\DivisionController', ['names' => 'admin.divisions']);
     Route::post('division-status/{id}', 'Backend\DivisionController@changeStatus')->name('admin.divisions.status');
     Route::resource('users', 'Backend\UsersController', ['names' => 'admin.users']);
+    Route::resource('colours', 'Backend\ColourController', ['names' => 'admin.colours']);
+    Route::resource('brands', 'Backend\BrandController', ['names' => 'admin.brands']);
 });
 
-/* Route::get('/permission', function () {
-$data = array(
-array('name' => 'division.view', 'group_name' => 'division', 'guard_name' => 'web'),
-array('name' => 'division.create', 'group_name' => 'division', 'guard_name' => 'web'),
-array('name' => 'division.edit', 'group_name' => 'division', 'guard_name' => 'web'),
-array('name' => 'division.delete', 'group_name' => 'division', 'guard_name' => 'web'),
-);
-DB::table('permissions')->insert($data);
-});
- */
+

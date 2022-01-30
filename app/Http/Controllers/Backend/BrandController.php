@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Model\Colour;
+use App\Model\Brand;
 
-class ColourController extends Controller
+class BrandController extends Controller
 {
     public $user;
 
@@ -23,11 +23,11 @@ class ColourController extends Controller
     public function index()
     {
         if (is_null($this->user)) {
-            abort(403, 'Sorry !! You are unauthorized to view any colour !');
+            abort(403, 'Sorry !! You are unauthorized to view any brand !');
         }
-        if ($this->user->can('colour.view') || $this->user->can('colour.create') || $this->user->can('colour.edit') || $this->user->can('colour.delete')) {
-            $colours = Colour::all();
-            return view('backend.pages.colours.index', compact('colours'));
+        if ($this->user->can('brand.view') || $this->user->can('brand.create') || $this->user->can('brand.edit') || $this->user->can('brand.delete')) {
+            $brands = Brand::all();
+            return view('backend.pages.brands.index', compact('brands'));
 
         } else {
             return redirect()->route('admin.dashboard');
@@ -41,10 +41,10 @@ class ColourController extends Controller
      */
     public function create()
     {
-        if (is_null($this->user) || !$this->user->can('colour.create')) {
-            abort(403, 'Sorry !! You are unauthorized to create any colour !');
+        if (is_null($this->user) || !$this->user->can('brand.create')) {
+            abort(403, 'Sorry !! You are unauthorized to create any brand !');
         }
-        return view('backend.pages.colours.create');
+        return view('backend.pages.brands.create');
     }
 
     /**
@@ -57,16 +57,16 @@ class ColourController extends Controller
     {
        // Validation Data
        $request->validate([
-            'name' => 'required|max:100|unique:colours',
+            'name' => 'required|max:100|unique:brands',
         ]);
 
         // Create New User
-        $data = new Colour();
+        $data = new Brand();
         $data->name = $request->name;
         $data->save();
 
-        session()->flash('success', 'Colour has been created !!');
-        return redirect()->route('admin.colours.index');
+        session()->flash('success', 'brand has been created !!');
+        return redirect()->route('admin.brands.index');
     }
 
     /**
@@ -88,12 +88,12 @@ class ColourController extends Controller
      */
     public function edit($id)
     {
-        if (is_null($this->user) || !$this->user->can('colour.edit')) {
-            abort(403, 'Sorry !! You are unauthorized to edit any colour !');
+        if (is_null($this->user) || !$this->user->can('brand.edit')) {
+            abort(403, 'Sorry !! You are unauthorized to edit any brand !');
         }
 
-        $colour = Colour::find($id);
-        return view('backend.pages.colours.edit', compact('colour'));
+        $brand = Brand::find($id);
+        return view('backend.pages.brands.edit', compact('brand'));
     }
 
     /**
@@ -106,18 +106,18 @@ class ColourController extends Controller
     public function update(Request $request, $id)
     {
         // Create New User
-        $data = Colour::find($id);
+        $data = Brand::find($id);
 
         // Validation Data
         $request->validate([
-            'name' => 'required|max:50|unique:colours,name,' . $id,
+            'name' => 'required|max:50|unique:brands,name,' . $id,
         ]);
 
         $data->name = $request->name;
         $data->update();
 
-        session()->flash('info', 'Colour name has been updated !!');
-        return redirect()->route('admin.colours.index');
+        session()->flash('info', 'brand name has been updated !!');
+        return redirect()->route('admin.brands.index');
     }
 
     /**
@@ -128,16 +128,16 @@ class ColourController extends Controller
      */
     public function destroy($id)
     {
-        if (is_null($this->user) || !$this->user->can('colour.delete')) {
-            abort(403, 'Sorry !! You are unauthorized to delete any colour !');
+        if (is_null($this->user) || !$this->user->can('brand.delete')) {
+            abort(403, 'Sorry !! You are unauthorized to delete any brand !');
         }
 
-        $data = Colour::find($id);
+        $data = Brand::find($id);
         if (!is_null($data)) {
             $data->delete();
         }
 
-        session()->flash('delete', 'Colour has been deleted !!');
+        session()->flash('delete', 'brand has been deleted !!');
         return back();
     }
 }

@@ -45,6 +45,39 @@ class RolePermissionSeeder extends Seeder
                     'user.delete',
                 ],
             ],
+
+            [
+                'group_name' => 'division',
+                'permissions' => [
+                    // division Permissions
+                    'division.view',
+                    'division.create',
+                    'division.edit',
+                    'division.delete',
+                ],
+            ],
+
+            [
+                'group_name' => 'colour',
+                'permissions' => [
+                    // colour Permissions
+                    'colour.view',
+                    'colour.create',
+                    'colour.edit',
+                    'colour.delete',
+                ],
+            ],
+
+            [
+                'group_name' => 'brand',
+                'permissions' => [
+                    // brand Permissions
+                    'brand.view',
+                    'brand.create',
+                    'brand.edit',
+                    'brand.delete',
+                ],
+            ],
             
         ];
 

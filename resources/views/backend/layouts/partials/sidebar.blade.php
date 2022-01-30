@@ -67,12 +67,24 @@
                 </a>
               </li>
               @endif
+
+              @if ($admin->can('colour.create') || $admin->can('colour.view') ||  $admin->can('colour.edit') ||  $admin->can('colour.delete'))
               <li class="nav-item">
-                <a href="../layout/top-nav-sidebar.html" class="nav-link">
+                <a href="{{route('admin.colours.index')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Sidebar</p>
+                  <p>Colour</p>
                 </a>
               </li>
+              @endif
+
+              @if ($admin->can('brand.create') || $admin->can('brand.view') ||  $admin->can('brand.edit') ||  $admin->can('brand.delete'))
+              <li class="nav-item">
+                <a href="{{route('admin.brands.index')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Brand</p>
+                </a>
+              </li>
+              @endif
            
             </ul>
           </li>

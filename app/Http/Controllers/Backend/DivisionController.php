@@ -89,7 +89,7 @@ class DivisionController extends Controller
     public function edit($id)
     {
         if (is_null($this->user) || !$this->user->can('division.edit')) {
-            abort(403, 'Sorry !! You are unauthorized to edit any user !');
+            abort(403, 'Sorry !! You are unauthorized to edit any division !');
         }
 
         $division = Division::find($id);
@@ -129,7 +129,7 @@ class DivisionController extends Controller
     public function destroy($id)
     {
         if (is_null($this->user) || !$this->user->can('division.delete')) {
-            abort(403, 'Sorry !! You are unauthorized to delete any user !');
+            abort(403, 'Sorry !! You are unauthorized to delete any division !');
         }
 
         $data = Division::find($id);
