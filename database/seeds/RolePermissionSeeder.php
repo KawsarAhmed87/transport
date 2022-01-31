@@ -112,6 +112,28 @@ class RolePermissionSeeder extends Seeder
                 ],
             ],
 
+            [
+                'group_name' => 'spare-parts',
+                'permissions' => [
+                    // brand Permissions
+                    'sparepart.view',
+                    'sparepart.create',
+                    'sparepart.edit',
+                    'sparepart.delete',
+                ],
+            ],
+
+            [
+                'group_name' => 'vehicle',
+                'permissions' => [
+                    // brand Permissions
+                    'vehicle.view',
+                    'vehicle.create',
+                    'vehicle.edit',
+                    'vehicle.delete',
+                ],
+            ],
+
         ];
 
         // Create and Assign Permissions

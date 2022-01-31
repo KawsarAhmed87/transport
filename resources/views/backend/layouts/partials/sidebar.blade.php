@@ -112,6 +112,24 @@
               </li>
               @endif
 
+              @if ($admin->can('sparepart.create') || $admin->can('sparepart.view') ||  $admin->can('sparepart.edit') ||  $admin->can('sparepart.delete'))
+              <li class="nav-item">
+                <a href="{{route('admin.spareparts.index')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Spare parts</p>
+                </a>
+              </li>
+              @endif
+
+             {{--  @if ($admin->can('vehicle.create') || $admin->can('vehicle.view') ||  $admin->can('vehicle.edit') ||  $admin->can('vehicle.delete'))
+              <li class="nav-item">
+                <a href="{{route('admin.vehicles.index')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Vehicle</p>
+                </a>
+              </li>
+              @endif --}}
+
               
            
             </ul>
