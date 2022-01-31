@@ -121,14 +121,14 @@
               </li>
               @endif
 
-             {{--  @if ($admin->can('vehicle.create') || $admin->can('vehicle.view') ||  $admin->can('vehicle.edit') ||  $admin->can('vehicle.delete'))
+              @if ($admin->can('vehicle.create') || $admin->can('vehicle.view') ||  $admin->can('vehicle.edit') ||  $admin->can('vehicle.delete'))
               <li class="nav-item">
                 <a href="{{route('admin.vehicles.index')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Vehicle</p>
                 </a>
               </li>
-              @endif --}}
+              @endif
 
               
            

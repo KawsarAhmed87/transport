@@ -2,10 +2,11 @@
 @extends('backend.layouts.master')
 
 @section('title')
-   Create colour
+   Create vehicle
 @endsection
 
 @push('style')
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 <style>
     .form-check-label {
@@ -32,11 +33,11 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Create colour</h1>
+            <h1>Create vehicle</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{route('admin.colours.index')}}" class="btn btn-success">Colour list</a></li>
+              <li class="breadcrumb-item"><a href="{{route('admin.vehicles.index')}}" class="btn btn-success">Vehicle list</a></li>
             </ol>
           </div>
         </div>
@@ -55,13 +56,23 @@
               <!-- /.card-header -->
               <div class="card-body">
               
-                <form action="{{ route('admin.colours.store') }}" method="POST" autocomplete="off">
+                <form action="{{ route('admin.vehicles.store') }}" method="POST" autocomplete="off">
                   @csrf
                   <div class="form-row">
                       <div class="form-group col-md-12 col-sm-12">
-                          <label for="name">Colour name<span class="required"> *</span></label>
-                          <input type="text" class="form-control" id="name" name="name" placeholder="Enter Colour name">
+                          <label for="name">Registration<span class="required"> *</span></label>
+                          <input type="text" class="form-control" id="name" name="name" placeholder="Enter vehicle name">
                       </div>
+                      <div class="form-group col-md-12 col-sm-12">
+                        <label for="name">Registration<span class="required"> *</span></label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter vehicle name">
+                    </div>
+                      <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                        <input type="text" name="date" class="form-control datetimepicker-input" data-target="#reservationdate"/>
+                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div> 
                   </div>
 
               
@@ -84,11 +95,26 @@
 @endsection
 
 @push('scripts')
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+  $('.input-group.date').datepicker({
+      todayHighlight: true,
+      format: "mm/dd/yyyy",
+  });
+  });
+</script>
+
+
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
 <script>
     $(document).ready(function() {
         $('.select2').select2();
+        
     })
 </script>
+
+
 
 @endpush

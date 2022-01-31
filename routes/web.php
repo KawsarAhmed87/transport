@@ -32,5 +32,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('service-type', 'Backend\ServiceTypeController', ['names' => 'admin.servicetypes']);
     Route::resource('units', 'Backend\UnitController', ['names' => 'admin.units']);
     Route::resource('spare-parts', 'Backend\SparePartsController', ['names' => 'admin.spareparts']);
+    Route::resource('vehicles', 'Backend\VehicleController', ['names' => 'admin.vehicles']);
 
 });

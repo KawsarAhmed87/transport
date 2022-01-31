@@ -3,7 +3,7 @@
 @extends('backend.layouts.master')
 
 @section('title')
-    Colour list
+  Vehicle list
 @endsection
 
 @push('style')
@@ -18,12 +18,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Colour list</h1>
+            <h1>vehicle list</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-            @if ($admin->can('colour.create'))
-          <li class="breadcrumb-item"><a href="{{route('admin.colours.create')}}" class="btn btn-success">Colour create</a></li>
+            @if ($admin->can('vehicle.create'))
+          <li class="breadcrumb-item"><a href="{{route('admin.vehicles.create')}}" class="btn btn-success">Vehicle create</a></li>
           @else
           @endif
             </ol>
@@ -52,21 +52,21 @@
                       </tr>
                   </thead>
                   <tbody>
-                     @foreach ($colours as $data)
+                     @foreach ($vehicles as $data)
                      <tr>
                           <td>{{ $loop->index+1 }}</td>
                           <td>{{ $data->name }}</td>
                                                   
                           <td>
-                            @if ($admin->can('colour.edit'))
-                              <a class="btn btn-success text-white" href="{{ route('admin.colours.edit', $data->id) }}">Edit</a>
+                            @if ($admin->can('vehicle.edit'))
+                              <a class="btn btn-success text-white" href="{{ route('admin.vehicles.edit', $data->id) }}">Edit</a>
                               @endif
-                              @if ($admin->can('colour.delete'))
+                              @if ($admin->can('vehicle.delete'))
                               <button type="button" class="btn btn-danger text-white" href=""
                               onclick="deleteItem({{ $data->id }})">
                                   Delete
                               </button>
-                              <form id="delete-form-{{ $data->id }}" action="{{ route('admin.colours.destroy', $data->id) }}" method="POST" style="display: none;">
+                              <form id="delete-form-{{ $data->id }}" action="{{ route('admin.vehicles.destroy', $data->id) }}" method="POST" style="display: none;">
                                   @method('DELETE')
                                   @csrf
                               </form>
