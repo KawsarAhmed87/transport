@@ -1,7 +1,7 @@
 <?php
 
-use App\Model\Division;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DivisionSeeder extends Seeder
 {
@@ -12,11 +12,37 @@ class DivisionSeeder extends Seeder
      */
     public function run()
     {
-        $division = Division::where('name', 'All')->first();
-        if (is_null($division)) {
-            $division = new Division();
-            $division->name = "All";
-            $division->save();
-        }
+        DB::table('divisions')->insert([
+            ['name' => 'All'],
+            ['name' => 'Chairman'],
+            ['name' => 'Managing Director'],
+        ]);
+
+        DB::table('colours')->insert([
+            ['name' => 'Black'],
+            ['name' => 'White'],
+            ['name' => 'Red'],
+        ]);
+
+        DB::table('brands')->insert([
+            ['name' => 'Toyota'],
+            ['name' => 'Nissan'],
+            ['name' => 'Honda'],
+        ]);
+
+        DB::table('units')->insert([
+            ['name' => 'Set'],
+            ['name' => 'Piece'],
+            ['name' => 'Litter'],
+        ]);
+
+        DB::table('vehicletypes')->insert([
+            ['name' => 'Jeep'],
+            ['name' => 'Double cabin pickup'],
+            ['name' => 'Single cabin pickup'],
+            ['name' => 'Microbus'],
+            ['name' => 'Car'],
+        ]);
+
     }
 }

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Model\Brand;
+use App\Model\Colour;
 use App\Model\Vehicle;
+use App\Model\Vehicletype;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -41,10 +44,14 @@ class VehicleController extends Controller
      */
     public function create()
     {
+
         if (is_null($this->user) || !$this->user->can('vehicle.create')) {
             abort(403, 'Sorry !! You are unauthorized to create any vehicle !');
         }
-        return view('backend.pages.vehicles.create');
+        $vehicle_types = Vehicletype::all();
+        $brands = Brand::all();
+        $colours = Colour::all();
+        return view('backend.pages.vehicles.create', compact('vehicle_types', 'brands', 'colours'));
     }
 
     /**
