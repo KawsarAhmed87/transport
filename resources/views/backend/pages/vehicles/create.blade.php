@@ -2,7 +2,7 @@
 @extends('backend.layouts.master')
 
 @section('title')
-   Create vehicle
+   Create vehicle registration
 @endsection
 
 @push('style')
