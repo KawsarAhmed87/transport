@@ -29,9 +29,14 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('colours', 'Backend\ColourController', ['names' => 'admin.colours']);
     Route::resource('brands', 'Backend\BrandController', ['names' => 'admin.brands']);
     Route::resource('vehicle-type', 'Backend\VehicleTypeController', ['names' => 'admin.vehicletypes']);
+
     Route::resource('service-type', 'Backend\ServiceTypeController', ['names' => 'admin.servicetypes']);
     Route::resource('units', 'Backend\UnitController', ['names' => 'admin.units']);
     Route::resource('spare-parts', 'Backend\SparePartsController', ['names' => 'admin.spareparts']);
+
     Route::resource('vehicles', 'Backend\VehicleController', ['names' => 'admin.vehicles']);
+    Route::post('vehicle-category', 'Backend\VehicleController@category')->name('admin.vehiclecategory');
+    Route::post('vehicle-showcolour', 'Backend\VehicleController@showColour')->name('admin.vehiShowcolour');
+    Route::post('vehicle-addcolour', 'Backend\VehicleController@addColour')->name('admin.vehiAddcolour');
 
 });

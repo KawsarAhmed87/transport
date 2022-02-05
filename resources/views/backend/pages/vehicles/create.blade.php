@@ -8,19 +8,9 @@
 @push('style')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 <style>
-    .form-check-label {
-        text-transform: capitalize;
-    }
-    .select2-container--default .select2-selection--multiple .select2-selection__choice{
-        background-color: #343a40;
-    border-color: #005cbf;
-    }
-    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
-        background-color: #ced4da;;
-        
-    }
-    element.style {
-    width: 100% !important;
+ 
+    .select2-container--default .select2-selection--single .select2-selection__rendered{
+      line-height: 22px!important;
     } 
 </style>
 @endpush
@@ -60,10 +50,10 @@
                 
                   <table class="table table-bordered">
                       <tr>
-                        <td width="15%">Registration no</td>
+                        <td width="15%">Registration no <span class="required">*</span></td>
                         <td width="35%"><input type="text" class="form-control" name="registration" placeholder="Dhaka Metro-" value="Dhaka Metro-"></td>
 
-                        <td width="15%">Purchase type</td>
+                        <td width="15%">Purchase type<span class="required">*</span></td>
                         <td width="35%">
                           <select class="form-control" name="purchase_type">
                             <option value="">Select</option>
@@ -74,17 +64,8 @@
                         </td>
                       </tr>
                       <tr>
-                        <td width="15%">Vehicle type</td>
-                        <td width="35%">
-                          <select class="form-control select2" name="vehi_type_id">
-                            <option value="">Select</option>
-                           @foreach($vehicle_types as $data)
-                           <option value="{{$data->id}}">{{$data->name}}</option>
-                           @endforeach
-                          </select>
-                        </td>
-
-                        <td width="15%">Vehicle brand </td>
+                        
+                        <td width="15%">Vehicle brand <span class="required">*</span></td>
                         <td width="35%">
                           <select class="form-control select2" name="brand_id">
                             <option value="">Select</option>
@@ -93,81 +74,102 @@
                            @endforeach
                           </select>
                         </td>
-                      </tr>
-
-                      <tr>
-                        <td width="15%">Vehicle category</td>
-                        <td width="35%">
-                          <select class="form-control select2" name="colour_id">
-                            <option value="">Select</option>
-                           @foreach($colours as $data)
-                           <option value="{{$data->id}}">{{$data->name}}</option>
-                           @endforeach
-                          </select>
-                        </td>
-                        <td width="15%">No of Seat </td>
-                        <td width="35%"><input type="text" class="form-control" name="seat"></td>
-                      </tr>
-
-                      <tr>
-                        <td width="15%">Engine type</td>
-                        <td width="35%">
-                          <select class="form-control select2" name="engine_type">
-                            <option value="">Select</option>
-                            <option value="Petrol Engine">Petrol Engine</option>
-                            <option value="Diesel Engine">Diesel Engine</option>
-                          </select>
-                        </td>
-                        <td width="15%">Vehicle CC </td>
+                        <td width="15%">Vehicle CC</td>
                         <td width="35%"><input type="text" class="form-control" name="vehicle_cc"></td>
+
                       </tr>
 
                       <tr>
-                        <td width="15%">Fuel type</td>
+                        <td width="15%">Vehicle type<span class="required">*</span></td>
                         <td width="35%">
-                          <select class="form-control select2" name="fuel_type">
+                          <select class="form-control select2" name="vehi_type_id" onchange="vehicle_category(this.value)">
                             <option value="">Select</option>
-                            <option value="Petrol">Petrol</option>
-                            <option value="Octane">Octane</option>
-                            <option value="Diesel">Diesel</option>
-                            <option value="CNG">CNG</option>
-                          </select>
-                        </td>
-                        <td width="15%">Fuel limit (monthly) </td>
-                        <td width="35%"><input type="text" class="form-control" name="fuel_limit"></td>
-                      </tr>
-
-                      <tr>
-                        <td width="15%">Colour</td>
-                        <td width="35%">
-                          <select class="form-control select2" name="colour_id">
-                            <option value="">Select</option>
-                           @foreach($colours as $data)
+                           @foreach($vehicle_types as $data)
                            <option value="{{$data->id}}">{{$data->name}}</option>
                            @endforeach
                           </select>
                         </td>
-                        <td width="15%">Vehicle Model </td>
-                        <td width="35%"><input type="text" class="form-control" name="vehicle_model"></td>
-                      </tr>
 
-                      <tr>
-                        <td width="15%">Chasis No</td>
-                        <td width="35%"><input type="text" class="form-control" name="chasis_no"></select>
+                        <td width="15%">Vehicle category<span class="required">*</span></td>
+                        <td width="35%">
+                          <select class="form-control select2" name="vehi_cat_id" id="vehi_cat_id">
+                           
+                          </select>
                         </td>
+                        
+                        
+                      </tr> 
+                  </table>
+                  <hr/>
+                  <hr/>
+                  <table class="table table-bordered">
+                    <tr>
+                      <td width="15%">Engine type</td>
+                      <td width="35%">
+                        <select class="form-control select2" name="engine_type">
+                          <option value="">Select</option>
+                          <option value="Petrol Engine">Petrol Engine</option>
+                          <option value="Diesel Engine">Diesel Engine</option>
+                        </select>
+                      </td>
+                      <td width="15%">No of Seat </td>
+                      <td width="35%"><input type="text" class="form-control" name="seat"></td>
+                      
+                    </tr>
 
-                        <td width="15%">Engine No </td>
-                        <td width="35%"><input type="text" class="form-control" name="engine_na"></td>
-                      </tr>
+                    <tr>
+                      <td width="15%">Fuel type</td>
+                      <td width="35%">
+                        <select class="form-control select2" name="fuel_type">
+                          <option value="">Select</option>
+                          <option value="Petrol">Petrol</option>
+                          <option value="Octane">Octane</option>
+                          <option value="Diesel">Diesel</option>
+                          <option value="CNG">CNG</option>
+                        </select>
+                      </td>
+                      <td width="15%">Fuel limit (monthly) </td>
+                      <td width="35%"><input type="text" class="form-control" name="fuel_limit"></td>
+                    </tr>
 
-                      <tr>
-                        <td width="15%">Tax expaired</td>
-                        <td width="35%"><input type="date" class="form-control" name="tax"></select>
-                        </td>
+                    <tr>
+                      <td width="15%">Colour <span class="btn btn-default" onclick="showModal()">+</span></td>
+                      <td width="35%">
+                        <select class="form-control select2" name="colour_id" id="colour_id">
+                           
+                        </select>
 
-                        <td width="15%">Fitness expaired </td>
-                        <td width="35%"><input type="date" class="form-control" name="fitness"></td>
-                      </tr>
+                      </td>
+                      <td width="15%">Vehicle Model </td>
+                      <td width="35%"><input type="text" class="form-control" name="vehicle_model"></td>
+                    </tr>
+
+                    <tr>
+                      <td width="15%">Chasis No</td>
+                      <td width="35%"><input type="text" class="form-control" name="chasis_no"></select>
+                      </td>
+
+                      <td width="15%">Engine No </td>
+                      <td width="35%"><input type="text" class="form-control" name="engine_no"></td>
+                    </tr>
+
+                    <tr>
+                      <td width="15%">Tax expaired</td>
+                      <td width="35%"><input type="date" class="form-control" name="tax"></select>
+                      </td>
+
+                      <td width="15%">Fitness expaired </td>
+                      <td width="35%"><input type="date" class="form-control" name="fitness"></td>
+                    </tr>
+
+                    <tr>
+                      <td width="15%">Cylinder expaired</td>
+                      <td width="35%"><input type="date" class="form-control" name="cylinder"></select>
+                      </td>
+
+                      <td width="15%">Remarks </td>
+                      <td width="35%"><input type="text" class="form-control" name="remarks"></td>
+                    </tr>
                   </table>
                   
                   <button type="submit" class="btn btn-primary mt-4 col-md-12 col-sm-12">Submit</button>
@@ -185,6 +187,11 @@
     </section>
     <!-- /.content -->
 </div>
+
+<!-- Modal -->
+@include('backend.pages.vehicles.partials.add_colour')
+
+
 @endsection
 
 @push('scripts')
@@ -197,7 +204,101 @@
         
     })
 </script>
+<script>
+  let _token = "{{csrf_token()}}";
+</script>
+<script>      
+    function vehicle_category(id) {
+        if (id) {
+            $.ajax({
+                url: "{{route('admin.vehiclecategory')}}",
+                type: "POST",
+                data: {
+                    id: id,
+                    _token: _token
+                },
+                dataType: "JSON",
+                success: function (data) {
+                    $(' #vehi_cat_id').html('');
+                    $(' #vehi_cat_id').html(data);
+                },
+                error: function (xhr, ajaxOption, thrownError) {
+                    console.log(thrownError + '\r\n' + xhr.statusText + '\r\n' + xhr.responseText);
+                }
+            });
+        }
+    }
 
+  </script>
 
+  {{-- colour --}}
+
+  <script>      
+    $(document).ready(function() {
+      
+      showColour();
+        
+    })
+
+    function showColour(){
+        $.ajax({
+                url: "{{route('admin.vehiShowcolour')}}",
+                type: "POST",
+                data: {
+                    _token: _token
+                },
+                dataType: "JSON",
+                success: function (data) {
+                    $(' #colour_id').html('');
+                    $(' #colour_id').html(data);
+                },
+                error: function (xhr, ajaxOption, thrownError) {
+                    console.log(thrownError + '\r\n' + xhr.statusText + '\r\n' + xhr.responseText);
+                }
+            });
+      }
+
+    
+
+  </script>
+
+  {{-- insert colour --}}
+
+  <script>
+
+    function showModal(){
+      document.getElementById("storeColour").reset();
+      $('#ColourModal').modal({
+            keyboard: false,
+            backdrop: 'static'
+        });
+    }
+      
+  </script>
+
+  
+<<script>
+  $('#storeColour').on('submit',function(event){
+      event.preventDefault();
+      // Get Alll Text Box Id's
+      name = $('#name').val();
+   
+      $.ajax({
+        url: "{{route('admin.vehiAddcolour')}}", //Define Post URL
+        type:"POST",
+        data:{
+          "_token": "{{ csrf_token() }}",
+          name:name,
+        },
+        //Display Response Success Message
+        success: function(response){
+          document.getElementById("storeColour").reset();
+          $('#ColourModal').modal('hide');
+          showColour();
+          toastr.success('Colour added successfully')
+     },
+    });
+  });
+  </script>
 
 @endpush

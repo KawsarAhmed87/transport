@@ -37,11 +37,14 @@ class DivisionSeeder extends Seeder
         ]);
 
         DB::table('vehicletypes')->insert([
-            ['name' => 'Jeep'],
-            ['name' => 'Double cabin pickup'],
-            ['name' => 'Single cabin pickup'],
-            ['name' => 'Microbus'],
-            ['name' => 'Car'],
+            ['name' => 'Jeep', 'parent_id' => 0],
+            ['name' => 'Pickup', 'parent_id' => 0],
+            ['name' => 'Microbus', 'parent_id' => 0],
+            ['name' => 'Car', 'parent_id' => 0],
+            ['name' => 'Pajero Sports', 'parent_id' => 1],
+            ['name' => 'Pajero Jeep', 'parent_id' => 1],
+            ['name' => 'Double Cabin Pickup', 'parent_id' => 2],
+            ['name' => 'Single Cabin Pickup', 'parent_id' => 2],
         ]);
 
     }

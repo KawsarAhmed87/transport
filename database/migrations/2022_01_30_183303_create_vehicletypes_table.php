@@ -16,6 +16,7 @@ class CreateVehicletypesTable extends Migration
         Schema::create('vehicletypes', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->unsignedBigInteger('parent_id')->default(0);
             $table->timestamps();
         });
     }
