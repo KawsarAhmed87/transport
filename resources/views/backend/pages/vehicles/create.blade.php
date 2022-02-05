@@ -65,7 +65,7 @@
                       </tr>
                       <tr>
                         
-                        <td width="15%">Vehicle brand <span class="required">*</span></td>
+                        <td width="15%">Vehicle brand</td>
                         <td width="35%">
                           <select class="form-control select2" name="brand_id">
                             <option value="">Select</option>
@@ -284,7 +284,7 @@
       name = $('#name').val();
    
       $.ajax({
-        url: "{{route('admin.vehiAddcolour')}}", //Define Post URL
+        url: "{{route('admin.vehiAddcolour')}}", //Define 
         type:"POST",
         data:{
           "_token": "{{ csrf_token() }}",
@@ -297,6 +297,11 @@
           showColour();
           toastr.success('Colour added successfully')
      },
+     error: function (xhr, ajaxOption, thrownError, message) {
+           $('#ColourModal').modal('hide');
+          console.log(thrownError + '\r\n' + xhr.statusText + '\r\n' + xhr.responseText);
+          toastr.error('Invalid data')
+      }
     });
   });
   </script>

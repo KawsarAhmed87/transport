@@ -63,7 +63,53 @@ class VehicleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        // Validation Data
+        $request->validate([
+            'registration' => 'required|max:100|unique:vehicles',
+            'purchase_type' => 'required|max:50',
+            'brand_id' => 'max:20',
+            'vehicle_cc' => 'max:20',
+            'vehi_type_id' => 'required|max:20',
+            'vehi_cat_id' => 'required|max:20',
+            'engine_type' => 'max:30',
+            'seat' => 'max:10',
+            'fuel_type' => 'max:20',
+            'fuel_limit' => 'max:25',
+            'colour_id' => 'max:20',
+            'vehicle_model' => 'max:10',
+            'chasis_no' => 'max:50',
+            'engine_no' => 'max:50',
+            'tax' => 'max:30',
+            'fitness' => 'max:30',
+            'cylinder' => 'max:30',
+            'remarks' => 'max:150',
+        ]);
+
+        // Create New User
+        $data = new Vehicle();
+        $data->registration = $request->registration;
+        $data->purchase_type = $request->purchase_type;
+        $data->brand_id = $request->brand_id;
+        $data->vehicle_cc = $request->vehicle_cc;
+        $data->vehi_type_id = $request->vehi_type_id;
+        $data->vehi_cat_id = $request->vehi_cat_id;
+        $data->engine_type = $request->engine_type;
+        $data->seat = $request->seat;
+        $data->fuel_type = $request->fuel_type;
+        $data->fuel_limit = $request->fuel_limit;
+        $data->colour_id = $request->colour_id;
+        $data->vehicle_model = $request->vehicle_model;
+        $data->chasis_no = $request->chasis_no;
+        $data->engine_no = $request->engine_no;
+        $data->tax = $request->tax;
+        $data->fitness = $request->fitness;
+        $data->cylinder = $request->cylinder;
+        $data->remarks = $request->remarks;
+        $data->save();
+
+        session()->flash('success', 'Vehicle registration has been created !!');
+        return redirect()->route('admin.vehicles.index');
     }
 
     /**
@@ -146,11 +192,18 @@ class VehicleController extends Controller
     }
     public function addColour(Request $request)
     {
+        // Validation Data
+        $request->validate([
+            'name' => 'required|max:100|unique:colours',
+        ]);
+
         $data = new Colour;
         $data->name = $request->name;
-        $data->save();
-
-        return Response()->json();
+        if ($data->save()) {
+            return Response()->json();
+        } else {
+            return redirect()->back();
+        }
 
     }
 

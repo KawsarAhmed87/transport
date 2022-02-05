@@ -47,7 +47,8 @@
                   <thead class="bg-light text-capitalize">
                       <tr>
                           <th width="10%">Sl</th>
-                          <th width="70%">Name</th>
+                          <th width="">Registration</th>
+                          <th width="">Vehicle Type</th>
                           <th width="20%">Action</th>
                       </tr>
                   </thead>
@@ -55,7 +56,8 @@
                      @foreach ($vehicles as $data)
                      <tr>
                           <td>{{ $loop->index+1 }}</td>
-                          <td>{{ $data->name }}</td>
+                          <td>{{ $data->registration }}</td>
+                          <td>{{ $data->vehi_type_id }}</td>
                                                   
                           <td>
                             @if ($admin->can('vehicle.edit'))
@@ -78,6 +80,7 @@
                   <tfoot>
                       <tr>
                         <th>Sl</th>
+                        <th>Name</th>
                         <th>Name</th>
                         <th>Action</th>
                     </tr>

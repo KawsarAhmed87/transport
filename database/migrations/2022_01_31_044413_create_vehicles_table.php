@@ -15,7 +15,28 @@ class CreateVehiclesTable extends Migration
     {
         Schema::create('vehicles', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('registration', 100)->unique();
+            $table->string('purchase_type', 50);
+            $table->unsignedBigInteger('brand_id')->nullable();
+            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
+            $table->string('vehicle_cc', 20)->nullable();
+            $table->unsignedBigInteger('vehi_type_id')->nullable();
+            $table->foreign('vehi_type_id')->references('id')->on('vehicletypes')->onDelete('cascade');
+            $table->unsignedBigInteger('vehi_cat_id')->nullable();
+            $table->foreign('vehi_cat_id')->references('id')->on('vehicletypes')->onDelete('cascade');
+            $table->string('engine_type', 30)->nullable();
+            $table->string('seat', 10)->nullable();
+            $table->string('fuel_type', 20)->nullable();
+            $table->string('fuel_limit', 25)->nullable();
+            $table->unsignedBigInteger('colour_id')->nullable();
+            $table->foreign('colour_id')->references('id')->on('colours')->onDelete('cascade');
+            $table->string('vehicle_model', 10)->nullable();
+            $table->string('chasis_no', 50)->nullable();
+            $table->string('engine_no', 50)->nullable();
+            $table->date('tax', 30)->nullable();
+            $table->date('fitness', 30)->nullable();
+            $table->date('cylinder', 30)->nullable();
+            $table->string('remarks', 150)->nullable();
             $table->timestamps();
         });
     }
