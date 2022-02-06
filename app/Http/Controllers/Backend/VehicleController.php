@@ -152,11 +152,11 @@ class VehicleController extends Controller
      */
     public function update(Request $request, $id)
     {
-         // Create New vehicle
-         $data = Vehicle::find($id);
+        // Create New vehicle
+        $data = Vehicle::find($id);
 
-         // Validation Data
-         $request->validate([
+        // Validation Data
+        $request->validate([
             'registration' => 'required|max:100|unique:vehicles,registration,' . $id,
             'purchase_type' => 'required|max:50',
             'brand_id' => 'max:20',
@@ -175,8 +175,8 @@ class VehicleController extends Controller
             'fitness' => 'max:30',
             'cylinder' => 'max:30',
             'remarks' => 'max:150',
-         ]);
- 
+        ]);
+
         $data->registration = $request->registration;
         $data->purchase_type = $request->purchase_type;
         $data->brand_id = $request->brand_id;
@@ -196,9 +196,9 @@ class VehicleController extends Controller
         $data->cylinder = $request->cylinder;
         $data->remarks = $request->remarks;
         $data->update();
- 
-         session()->flash('info', 'Vehicle has been updated !!');
-         return redirect()->route('admin.vehicles.index');
+
+        session()->flash('info', 'Vehicle has been updated !!');
+        return redirect()->route('admin.vehicles.index');
     }
 
     /**

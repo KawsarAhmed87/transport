@@ -86,6 +86,7 @@
                       <tr>
                         <td width="15%">Vehicle type<span class="required">*</span></td>
                         <td width="35%">
+                          <input type="hidden" value="{{$vehicle->vehi_type_id}}" id="old_vehi_type_id"/>
                           <select class="form-control select2" name="vehi_type_id" onchange="vehicle_category(this.value)">
                             <option value="">Select</option>
                            @foreach($vehicle_types as $data)
@@ -96,8 +97,9 @@
 
                         <td width="15%">Vehicle category<span class="required">*</span></td>
                         <td width="35%">
+                          <input type="hidden" value="{{$vehicle->vehi_cat_id}}" id="old_vehi_cat_id" />
                           <select class="form-control select2" name="vehi_cat_id" id="vehi_cat_id">
-                          
+                           
                           </select>
                         </td>
                         
@@ -139,6 +141,7 @@
                     <tr>
                       <td width="15%">Colour <span class="btn btn-default" onclick="showModal()" >+</span></td>
                       <td width="35%">
+                        <input type="hidden" value="{{$vehicle->colour_id}}" id="old_colour_id" />
                         <select class="form-control select2" name="colour_id" id="colour_id" >
                          
                          
@@ -202,17 +205,23 @@
 @push('scripts')
 
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
-
-<script>
-    $(document).ready(function() {
-        $('.select2').select2();
-        
-    })
-</script>
 <script>
   let _token = "{{csrf_token()}}";
 </script>
-<script>      
+
+<script>
+  old_vehi_type_id = $('#old_vehi_type_id').val();
+    $(document).ready(function() {
+        $('.select2').select2();
+
+        
+         vehicle_category(old_vehi_type_id);    
+    })
+</script>
+
+<script>  
+
+old_vehi_cat_id = $('#old_vehi_cat_id').val();
     function vehicle_category(id) {
         if (id) {
             $.ajax({
@@ -224,8 +233,11 @@
                 },
                 dataType: "JSON",
                 success: function (data) {
+
                     $(' #vehi_cat_id').html('');
                     $(' #vehi_cat_id').html(data);
+                    $('#vehi_cat_id').val(old_vehi_cat_id);  
+                    
                 },
                 error: function (xhr, ajaxOption, thrownError) {
                     console.log(thrownError + '\r\n' + xhr.statusText + '\r\n' + xhr.responseText);
@@ -241,10 +253,11 @@
   <script>      
     $(document).ready(function() {
       
-      showColour();
-        
+      showColour();    
     })
 
+    old_colour_id = $('#old_colour_id').val();
+ 
     function showColour(){
         $.ajax({
                 url: "{{route('admin.vehiShowcolour')}}",
@@ -256,14 +269,13 @@
                 success: function (data) {
                     $(' #colour_id').html('');
                     $(' #colour_id').html(data);
+                    $('#colour_id').val(old_colour_id);    
                 },
                 error: function (xhr, ajaxOption, thrownError) {
                     console.log(thrownError + '\r\n' + xhr.statusText + '\r\n' + xhr.responseText);
                 }
             });
       }
-
-    
 
   </script>
 
@@ -289,7 +301,7 @@
       name = $('#name').val();
    
       $.ajax({
-        url: "{{route('admin.vehiAddcolour')}}", //Define 
+        url: "{{route('admin.vehiAddcolour')}}",
         type:"POST",
         data:{
           "_token": "{{ csrf_token() }}",

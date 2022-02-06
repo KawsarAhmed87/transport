@@ -36,7 +36,9 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::resource('vehicles', 'Backend\VehicleController', ['names' => 'admin.vehicles']);
     Route::post('vehicle-category', 'Backend\VehicleController@category')->name('admin.vehiclecategory');
+
     Route::post('vehicle-showcolour', 'Backend\VehicleController@showColour')->name('admin.vehiShowcolour');
+
     Route::post('vehicle-addcolour', 'Backend\VehicleController@addColour')->name('admin.vehiAddcolour');
 
 });
