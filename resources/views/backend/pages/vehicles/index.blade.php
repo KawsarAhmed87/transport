@@ -80,8 +80,8 @@
                   <tfoot>
                       <tr>
                         <th>Sl</th>
-                        <th>Name</th>
-                        <th>Name</th>
+                        <th>Registration</th>
+                        <th>Vehicle Type</th>
                         <th>Action</th>
                     </tr>
                     </tfoot>
