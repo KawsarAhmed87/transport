@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Model\Colour;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Model\Colour;
 
 class ColourController extends Controller
 {
@@ -55,8 +55,8 @@ class ColourController extends Controller
      */
     public function store(Request $request)
     {
-       // Validation Data
-       $request->validate([
+        // Validation Data
+        $request->validate([
             'name' => 'required|max:100|unique:colours',
         ]);
 

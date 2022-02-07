@@ -134,6 +134,17 @@ class RolePermissionSeeder extends Seeder
                 ],
             ],
 
+            [
+                'group_name' => 'assign',
+                'permissions' => [
+                    // brand Permissions
+                    'assign.view',
+                    'assign.create',
+                    'assign.edit',
+                    'assign.delete',
+                ],
+            ],
+
         ];
 
         // Create and Assign Permissions

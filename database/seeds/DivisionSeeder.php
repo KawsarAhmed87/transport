@@ -13,7 +13,7 @@ class DivisionSeeder extends Seeder
     public function run()
     {
         DB::table('divisions')->insert([
-            ['name' => 'All'],
+            ['name' => 'N/A'],
             ['name' => 'Chairman'],
             ['name' => 'Managing Director'],
         ]);

@@ -129,11 +129,17 @@
                 </a>
               </li>
               @endif
-
-              
-           
             </ul>
           </li>
+
+          @if ($admin->can('assign.create') || $admin->can('assign.view') ||  $admin->can('assign.edit') ||  $admin->can('assign.delete'))
+              <li class="nav-item">
+                <a href="{{route('admin.assigns.index')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Vehicle Assign</p>
+                </a>
+              </li>
+              @endif
 
           <li class="nav-item">
             <a  href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
