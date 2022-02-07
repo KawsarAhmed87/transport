@@ -120,7 +120,16 @@ class VehicleController extends Controller
      */
     public function show($id)
     {
-        //
+        if (is_null($this->user) || !$this->user->can('vehicle.view')) {
+            abort(403, 'Sorry !! You are unauthorized to view any vehicle !');
+        }
+
+        $vehicle = Vehicle::find($id);
+        $vehicle_types = Vehicletype::where('parent_id', 0)->get();
+        $vehicle_categories = Vehicletype::where('parent_id', '!=', 0)->get();
+        $brands = Brand::all();
+        $colours = Colour::all();
+        return view('backend.pages.vehicles.view', compact('vehicle', 'vehicle_types', 'vehicle_categories', 'brands', 'colours'));
     }
 
     /**
@@ -209,7 +218,17 @@ class VehicleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if (is_null($this->user) || !$this->user->can('vehicle.delete')) {
+            abort(403, 'Sorry !! You are unauthorized to delete any vehicle !');
+        }
+
+        $data = Vehicle::find($id);
+        if (!is_null($data)) {
+            $data->delete();
+        }
+
+        session()->flash('delete', 'Vehicle has been deleted !!');
+        return back();
     }
 
     public function category(Request $request)

@@ -46,10 +46,11 @@
                 <table id="example1"  class="table table-bordered table-striped">
                   <thead class="bg-light text-capitalize">
                       <tr>
-                          <th width="10%">Sl</th>
-                          <th width="">Registration</th>
-                          <th width="">Vehicle Type</th>
-                          <th width="20%">Action</th>
+                          <th width="7%">Sl</th>
+                          <th width="30%">Registration</th>
+                          <th width="25%">Vehicle Type</th>
+                          <th width="15%">Model</th>
+                          <th width="23%">Action</th>
                       </tr>
                   </thead>
                   <tbody>
@@ -57,9 +58,13 @@
                      <tr>
                           <td>{{ $loop->index+1 }}</td>
                           <td>{{ $data->registration }}</td>
-                          <td>{{ $data->vehi_type_id }}</td>
+                          <td>{{ $data->vehicle_type->name." (".$data->vehicle_category->name.")" }}</td>
+                          <td>{{ $data->vehicle_model }}</td>
                                                   
                           <td>
+                            @if($admin->can('vehicle.view'))
+                            <a class="btn btn-info text-white" href="{{ route('admin.vehicles.show', $data->id) }}">View</a>
+                            @endif
                             @if ($admin->can('vehicle.edit'))
                               <a class="btn btn-success text-white" href="{{ route('admin.vehicles.edit', $data->id) }}">Edit</a>
                               @endif
@@ -82,6 +87,7 @@
                         <th>Sl</th>
                         <th>Registration</th>
                         <th>Vehicle Type</th>
+                        <th>Model</th>
                         <th>Action</th>
                     </tr>
                     </tfoot>

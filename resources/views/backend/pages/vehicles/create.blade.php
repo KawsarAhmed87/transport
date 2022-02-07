@@ -122,10 +122,12 @@
                       <td width="35%">
                         <select class="form-control select2" name="fuel_type">
                           <option value="">Select</option>
-                          <option value="Petrol">Petrol</option>
-                          <option value="Octane">Octane</option>
-                          <option value="Diesel">Diesel</option>
-                          <option value="CNG">CNG</option>
+                          @php
+                          $fuel_type = array('CNG'=>'CNG', 'LPG'=>'LPG', 'Petrol'=>'Petrol', 'Octane'=>'Octane', 'Diesel'=>'Diesel');
+                          @endphp   
+                          @foreach ($fuel_type as $key=>$value)
+                          <option value="{{$key}}">{{$value}}</option>
+                          @endforeach
                         </select>
                       </td>
                       <td width="15%">Fuel limit (monthly) </td>
@@ -146,7 +148,7 @@
 
                     <tr>
                       <td width="15%">Chasis No</td>
-                      <td width="35%"><input type="text" class="form-control" name="chasis_no"></select>
+                      <td width="35%"><input type="text" class="form-control" name="chasis_no">
                       </td>
 
                       <td width="15%">Engine No </td>
@@ -155,7 +157,7 @@
 
                     <tr>
                       <td width="15%">Tax expaired</td>
-                      <td width="35%"><input type="date" class="form-control" name="tax"></select>
+                      <td width="35%"><input type="date" class="form-control" name="tax">
                       </td>
 
                       <td width="15%">Fitness expaired </td>
@@ -164,7 +166,7 @@
 
                     <tr>
                       <td width="15%">Cylinder expaired</td>
-                      <td width="35%"><input type="date" class="form-control" name="cylinder"></select>
+                      <td width="35%"><input type="date" class="form-control" name="cylinder">
                       </td>
 
                       <td width="15%">Remarks </td>
