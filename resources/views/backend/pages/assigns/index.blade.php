@@ -47,7 +47,10 @@
                   <thead class="bg-light text-capitalize">
                       <tr>
                           <th width="10%">Sl</th>
-                          <th width="70%">Name</th>
+                          <th width="15%">Division</th>
+                          <th width="25%">Registration</th>
+                          <th width="20%">Phone</th>
+                          <th width="10%">Satus</th>
                           <th width="20%">Action</th>
                       </tr>
                   </thead>
@@ -55,7 +58,10 @@
                      @foreach ($assigns as $data)
                      <tr>
                           <td>{{ $loop->index+1 }}</td>
-                          <td></td>
+                          <td>{{$data->division->name}}</td>
+                          <td>{{$data->vehicle->registration}}</td>
+                          <td>{{$data->officer_phone}}</td>
+                          <td>{{$data->status}}</td>
                                                   
                           <td>
                             @if ($admin->can('assign.edit'))
@@ -78,7 +84,10 @@
                   <tfoot>
                       <tr>
                         <th>Sl</th>
-                        <th>Name</th>
+                        <th>Division</th>
+                        <th>Registration</th>
+                        <th>Phone</th>
+                        <th>Satus</th>
                         <th>Action</th>
                     </tr>
                     </tfoot>

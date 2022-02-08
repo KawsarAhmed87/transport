@@ -1,7 +1,8 @@
+
 @extends('backend.layouts.master')
 
 @section('title')
-   Edit colour
+   Edit vehicle assign
 @endsection
 
 @push('style')
@@ -11,13 +12,16 @@
         text-transform: capitalize;
     }
     .select2-container--default .select2-selection--multiple .select2-selection__choice{
-        background-color: #0062cc;
+        background-color: #343a40;
     border-color: #005cbf;
     }
     .select2-container--default .select2-selection--multiple .select2-selection__choice__remove{
         background-color: #ced4da;;
         
     }
+    element.style {
+    width: 100% !important;
+    } 
 </style>
 @endpush
 
@@ -28,11 +32,11 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Edit colour</h1>
+            <h1>Edit vehicle assign</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="{{route('admin.colours.index')}}" class="btn btn-success">Colour list</a></li>
+              <li class="breadcrumb-item"><a href="{{route('admin.assigns.index')}}" class="btn btn-success">Assign list</a></li>
             </ol>
           </div>
         </div>
@@ -47,21 +51,66 @@
             
 
             <div class="card">
+      
               <!-- /.card-header -->
               <div class="card-body">
               
-                <form action="{{ route('admin.colours.update', $colour->id) }}" method="POST" autocomplete="off">
-                  @method('PUT')
+                <form action="{{ route('admin.assigns.update', $assign->id) }}" method="POST" autocomplete="off">
+                  @method('put')
                   @csrf
-                  <div class="form-row">
-                      <div class="form-group col-md-12 col-sm-12">
-                          <label for="name">Colour Name <span class="required"> *</span></label>
-                          <input type="text" class="form-control" id="name" name="name" placeholder="Enter colour Name" value="{{ $colour->name }}">
-                      </div>
-                     
-                  </div>
-                  
-                  <button type="submit" class="btn btn-primary mt-4 col-md-12 col-sm-12">Update</button>
+                  <table class="table table-bordered">
+                    <tr>
+                      <td width="15%">Registration no <span class="required">*</span></td>
+                      <td width="35%">
+                        <select class="form-control select2" name="vehicle_id">
+                          <option value="">Select</option>
+                          @foreach($vehicles as $data)
+                          <option value="{{$data->id}}" {{$assign->vehicle_id == $data->id ? 'selected': ''}}>{{$data->registration}}</option>
+                          @endforeach
+                        </select>
+                      </td>
+                      
+                      <td width="15%">Division <span class="required">*</span></td>
+                      <td width="35%">
+                        <select class="form-control select2" name="division_id">
+                          <option value="">Select</option>
+                          @foreach($divisions as $data)
+                          <option value="{{$data->id}}" {{$assign->division_id == $data->id ? 'selected': ''}}>{{$data->name}}</option>
+                          @endforeach
+                        </select>
+                      </td>
+                      
+                    </tr>
+                    <tr>
+                      <td width="15%">Officer info</td>
+                      <td width="35%"><input type="text" value="{{$assign->officer_info}}" class="form-control" name="officer_info"/></td>
+                      <td width="15%">Officer phone</td>
+                      <td width="35%"><input type="text" value="{{$assign->officer_phone}}" class="form-control" name="officer_phone"/></td>
+                    </tr>
+                    <tr>
+                      <td width="15%">Assign start date</td>
+                      <td width="35%"><input type="date" value="{{$assign->assign_start_date}}" class="form-control" name="assign_start_date"/></td>
+                      <td width="15%">Memo & date</td>
+                      <td width="35%"><input type="text" value="{{$assign->memo}}" class="form-control" name="memo"/></td>
+                    </tr>
+
+                    <tr>
+                      <td width="15%">Remarks</td>
+                      <td width="35%"><input type="text" value="{{$assign->remarks}}" class="form-control" name="remarks"/></td>
+                      <td width="15%">Status <span class="required">*</span></td>
+                      <td width="35%">
+                        <select class="form-control" name="status">
+                          <option value="">Select</option>
+                          <option value="Active" {{$assign->status == 'Active' ? 'selected': ''}}>Active</option>
+                          <option value="Inactive" {{$assign->status == 'Inactive' ? 'selected': ''}}>Inactive</option>
+
+                        </select>
+                      </td>
+                    </tr>
+                    
+                  </table>
+     
+                  <button type="submit" class="btn btn-primary mt-4 col-md-12 col-sm-12">Submit</button>
               </form>
               </div>
               <!-- /.card-body -->

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Model\Assign;
+use App\Model\Division;
+use App\Model\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -44,7 +46,9 @@ class AssignController extends Controller
         if (is_null($this->user) || !$this->user->can('assign.create')) {
             abort(403, 'Sorry !! You are unauthorized to create any assign !');
         }
-        return view('backend.pages.assigns.create');
+        $divisions = Division::all();
+        $vehicles = Vehicle::all();
+        return view('backend.pages.assigns.create', compact('divisions', 'vehicles'));
     }
 
     /**
@@ -55,7 +59,32 @@ class AssignController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validation Data
+        $request->validate([
+            'division_id' => 'required|max:20',
+            'vehicle_id' => 'required|max:20',
+            'officer_info' => 'max:20',
+            'officer_phone' => 'max:20',
+            'assign_start_date' => 'max:20',
+            'memo' => 'max:20',
+            'remarks' => 'max:20',
+            'status' => 'required|max:20',
+        ]);
+
+        // Create New User
+        $data = new Assign();
+        $data->division_id = $request->division_id;
+        $data->vehicle_id = $request->vehicle_id;
+        $data->officer_info = $request->officer_info;
+        $data->officer_phone = $request->officer_phone;
+        $data->assign_start_date = $request->assign_start_date;
+        $data->memo = $request->memo;
+        $data->remarks = $request->remarks;
+        $data->status = $request->status;
+        $data->save();
+
+        session()->flash('success', 'Vehicle assign has been created !!');
+        return redirect()->route('admin.assigns.index');
     }
 
     /**
@@ -77,7 +106,14 @@ class AssignController extends Controller
      */
     public function edit($id)
     {
-        //
+        if (is_null($this->user) || !$this->user->can('assign.edit')) {
+            abort(403, 'Sorry !! You are unauthorized to edit any assign !');
+        }
+
+        $assign = Assign::find($id);
+        $divisions = Division::all();
+        $vehicles = Vehicle::all();
+        return view('backend.pages.assigns.edit', compact('assign', 'divisions', 'vehicles'));
     }
 
     /**
@@ -89,7 +125,33 @@ class AssignController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Create New User
+        $data = Assign::find($id);
+
+        // Validation Data
+        $request->validate([
+            'division_id' => 'required|max:20',
+            'vehicle_id' => 'required|max:20',
+            'officer_info' => 'max:20',
+            'officer_phone' => 'max:20',
+            'assign_start_date' => 'max:20',
+            'memo' => 'max:20',
+            'remarks' => 'max:20',
+            'status' => 'required|max:20',
+        ]);
+
+        $data->division_id = $request->division_id;
+        $data->vehicle_id = $request->vehicle_id;
+        $data->officer_info = $request->officer_info;
+        $data->officer_phone = $request->officer_phone;
+        $data->assign_start_date = $request->assign_start_date;
+        $data->memo = $request->memo;
+        $data->remarks = $request->remarks;
+        $data->status = $request->status;
+        $data->update();
+
+        session()->flash('info', 'Vehicle assign has been updated !!');
+        return redirect()->route('admin.assigns.index');
     }
 
     /**
@@ -100,6 +162,16 @@ class AssignController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if (is_null($this->user) || !$this->user->can('assign.delete')) {
+            abort(403, 'Sorry !! You are unauthorized to delete any assign !');
+        }
+
+        $data = Assign::find($id);
+        if (!is_null($data)) {
+            $data->delete();
+        }
+
+        session()->flash('delete', 'Vehicle assign has been deleted !!');
+        return back();
     }
 }

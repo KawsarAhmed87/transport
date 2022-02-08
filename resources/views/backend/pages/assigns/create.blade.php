@@ -59,22 +59,30 @@
                   @csrf
                   <table class="table table-bordered">
                     <tr>
-                      <td width="15%">Division</td>
+                      <td width="15%">Registration no <span class="required">*</span></td>
+                      <td width="35%">
+                        <select class="form-control select2" name="vehicle_id">
+                          <option value="">Select</option>
+                          @foreach($vehicles as $data)
+                          <option value="{{$data->id}}">{{$data->registration}}</option>
+                          @endforeach
+                        </select>
+                      </td>
+                      
+                      <td width="15%">Division <span class="required">*</span></td>
                       <td width="35%">
                         <select class="form-control select2" name="division_id">
                           <option value="">Select</option>
+                          @foreach($divisions as $data)
+                          <option value="{{$data->id}}">{{$data->name}}</option>
+                          @endforeach
                         </select>
                       </td>
-                      <td width="15%">Registration no</td>
-                      <td width="35%">
-                        <select class="form-control select2" name="division_id">
-                          <option value="">Select</option>
-                        </select>
-                      </td>
+                      
                     </tr>
                     <tr>
-                      <td width="15%">Officer name</td>
-                      <td width="35%"><input type="text" class="form-control" name="officer_name"/></td>
+                      <td width="15%">Officer info</td>
+                      <td width="35%"><input type="text" class="form-control" name="officer_info"/></td>
                       <td width="15%">Officer phone</td>
                       <td width="35%"><input type="text" class="form-control" name="officer_phone"/></td>
                     </tr>
@@ -88,10 +96,13 @@
                     <tr>
                       <td width="15%">Remarks</td>
                       <td width="35%"><input type="text" class="form-control" name="remarks"/></td>
-                      <td width="15%">Status</td>
+                      <td width="15%">Status <span class="required">*</span></td>
                       <td width="35%">
                         <select class="form-control" name="status">
                           <option value="">Select</option>
+                          <option value="Active">Active</option>
+                          <option value="Inactive">Inactive</option>
+
                         </select>
                       </td>
                     </tr>
