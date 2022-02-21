@@ -8,6 +8,7 @@ use App\Model\Division;
 use App\Model\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AssignController extends Controller
 {
@@ -43,11 +44,20 @@ class AssignController extends Controller
      */
     public function create()
     {
+
         if (is_null($this->user) || !$this->user->can('assign.create')) {
             abort(403, 'Sorry !! You are unauthorized to create any assign !');
         }
         $divisions = Division::all();
-        $vehicles = Vehicle::all();
+        $vehicles = DB::table('vehicles')
+            ->leftJoin('assigns', 'vehicles.id', '=', 'assigns.vehicle_id')
+            ->where('assigns.vehicle_id', null)
+            ->orwhere('assigns.status', 'like', '%' . 'Inactive' . '%')
+            ->where('assigns.status', '!=', 'Active')
+            ->select('vehicles.id', 'vehicles.registration', 'assigns.status')
+            ->distinct()
+            ->get();
+
         return view('backend.pages.assigns.create', compact('divisions', 'vehicles'));
     }
 

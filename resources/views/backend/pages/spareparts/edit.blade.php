@@ -53,6 +53,19 @@
                 <form action="{{ route('admin.spareparts.update', $sparepart->id) }}" method="POST" autocomplete="off">
                   @method('PUT')
                   @csrf
+
+                  <div class="form-row">
+                    <div class="form-group col-md-12 col-sm-12">
+                        <label for="name">Service type<span class="required"> *</span></label>
+                        <select class="form-control" name="parent_id">
+                          <option value="">Select</option>
+                          @foreach($servicetypes as $data)
+                          <option value="{{$data->id}}" {{$sparepart->parent_id == $data->id ? 'selected': ''}}>{{$data->name}}</option>
+                          @endforeach
+                        </select>
+                    </div>
+                </div>
+
                   <div class="form-row">
                       <div class="form-group col-md-12 col-sm-12">
                           <label for="name">Spare parts Name <span class="required"> *</span></label>

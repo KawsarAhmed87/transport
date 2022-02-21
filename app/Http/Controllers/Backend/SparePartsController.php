@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Model\Sparepart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Model\Sparepart;
 
 class SparePartsController extends Controller
 {
@@ -26,7 +26,7 @@ class SparePartsController extends Controller
             abort(403, 'Sorry !! You are unauthorized to view any sparepart !');
         }
         if ($this->user->can('sparepart.view') || $this->user->can('sparepart.create') || $this->user->can('sparepart.edit') || $this->user->can('sparepart.delete')) {
-            $spareparts = Sparepart::all();
+            $spareparts = Sparepart::where('parent_id', '!=', 0)->get();
             return view('backend.pages.spareparts.index', compact('spareparts'));
 
         } else {
@@ -44,7 +44,8 @@ class SparePartsController extends Controller
         if (is_null($this->user) || !$this->user->can('sparepart.create')) {
             abort(403, 'Sorry !! You are unauthorized to create any sparepart !');
         }
-        return view('backend.pages.spareparts.create');
+        $servicetypes = Sparepart::where('parent_id', 0)->get();
+        return view('backend.pages.spareparts.create', compact('servicetypes'));
     }
 
     /**
@@ -55,14 +56,16 @@ class SparePartsController extends Controller
      */
     public function store(Request $request)
     {
-       // Validation Data
-       $request->validate([
+        // Validation Data
+        $request->validate([
             'name' => 'required|max:100|unique:spareparts',
+            'parent_id' => 'required',
         ]);
 
         // Create New User
         $data = new Sparepart();
         $data->name = $request->name;
+        $data->parent_id = $request->parent_id;
         $data->save();
 
         session()->flash('success', 'Sparepart has been created !!');
@@ -91,9 +94,9 @@ class SparePartsController extends Controller
         if (is_null($this->user) || !$this->user->can('sparepart.edit')) {
             abort(403, 'Sorry !! You are unauthorized to edit any sparepart !');
         }
-
+        $servicetypes = Sparepart::where('parent_id', 0)->get();
         $sparepart = Sparepart::find($id);
-        return view('backend.pages.spareparts.edit', compact('sparepart'));
+        return view('backend.pages.spareparts.edit', compact('servicetypes', 'sparepart'));
     }
 
     /**
@@ -106,14 +109,16 @@ class SparePartsController extends Controller
     public function update(Request $request, $id)
     {
         // Create New User
-        $data = Sparepart::find($id);
+        $data = Sparepart::where('parent_id', '!=', 0)->find($id);
 
         // Validation Data
         $request->validate([
             'name' => 'required|max:50|unique:spareparts,name,' . $id,
+            'parent_id' => 'required',
         ]);
 
         $data->name = $request->name;
+        $data->parent_id = $request->parent_id;
         $data->update();
 
         session()->flash('info', 'Sparepart name has been updated !!');
@@ -132,7 +137,7 @@ class SparePartsController extends Controller
             abort(403, 'Sorry !! You are unauthorized to delete any sparepart !');
         }
 
-        $data = Sparepart::find($id);
+        $data = Sparepart::where('parent_id', '!=', 0)->find($id);
         if (!is_null($data)) {
             $data->delete();
         }

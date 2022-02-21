@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Model\Servicetype;
+use App\Model\Sparepart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,7 +26,7 @@ class servicetypeController extends Controller
             abort(403, 'Sorry !! You are unauthorized to view any service type !');
         }
         if ($this->user->can('servicetype.view') || $this->user->can('servicetype.create') || $this->user->can('servicetype.edit') || $this->user->can('servicetype.delete')) {
-            $servicetypes = Servicetype::all();
+            $servicetypes = Sparepart::where('parent_id', 0)->get();
             return view('backend.pages.servicetypes.index', compact('servicetypes'));
 
         } else {
@@ -57,12 +57,13 @@ class servicetypeController extends Controller
     {
         // Validation Data
         $request->validate([
-            'name' => 'required|max:100|unique:servicetypes',
+            'name' => 'required|max:100|unique:spareparts',
         ]);
 
         // Create New User
-        $data = new Servicetype();
+        $data = new Sparepart();
         $data->name = $request->name;
+        $data->parent_id = 0;
         $data->save();
 
         session()->flash('success', 'Service type has been created !!');
@@ -92,7 +93,7 @@ class servicetypeController extends Controller
             abort(403, 'Sorry !! You are unauthorized to edit any service type !');
         }
 
-        $servicetype = Servicetype::find($id);
+        $servicetype = Sparepart::where('parent_id', 0)->find($id);
         return view('backend.pages.servicetypes.edit', compact('servicetype'));
     }
 
@@ -106,14 +107,15 @@ class servicetypeController extends Controller
     public function update(Request $request, $id)
     {
         // Create New User
-        $data = Servicetype::find($id);
+        $data = Sparepart::find($id);
 
         // Validation Data
         $request->validate([
-            'name' => 'required|max:50|unique:servicetypes,name,' . $id,
+            'name' => 'required|max:50|unique:spareparts,name,' . $id,
         ]);
 
         $data->name = $request->name;
+        $data->parent_id = 0;
         $data->update();
 
         session()->flash('info', 'service type name has been updated !!');
@@ -132,7 +134,7 @@ class servicetypeController extends Controller
             abort(403, 'Sorry !! You are unauthorized to delete any service type !');
         }
 
-        $data = Servicetype::find($id);
+        $data = Sparepart::where('parent_id', 0)->find($id);
         if (!is_null($data)) {
             $data->delete();
         }

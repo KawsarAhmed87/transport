@@ -23,6 +23,7 @@ Spare parts list
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
             @if ($admin->can('sparepart.create'))
+            
           <li class="breadcrumb-item"><a href="{{route('admin.spareparts.create')}}" class="btn btn-success">Spare parts create</a></li>
           @else
           @endif
@@ -47,7 +48,8 @@ Spare parts list
                   <thead class="bg-light text-capitalize">
                       <tr>
                           <th width="10%">Sl</th>
-                          <th width="70%">Name</th>
+                          <th width="30%">Service Type</th>
+                          <th width="40%">Spare Parts</th>
                           <th width="20%">Action</th>
                       </tr>
                   </thead>
@@ -55,6 +57,7 @@ Spare parts list
                      @foreach ($spareparts as $data)
                      <tr>
                           <td>{{ $loop->index+1 }}</td>
+                          <td>{{ $data->servicetype->name }}</td>
                           <td>{{ $data->name }}</td>
                                                   
                           <td>
@@ -78,7 +81,8 @@ Spare parts list
                   <tfoot>
                       <tr>
                         <th>Sl</th>
-                        <th>Name</th>
+                        <th>Service Type</th>
+                        <th>Spare Parts</th>
                         <th>Action</th>
                     </tr>
                     </tfoot>

@@ -16,6 +16,7 @@ class CreateSparepartsTable extends Migration
         Schema::create('spareparts', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->unsignedBigInteger('parent_id')->default(0);
             $table->timestamps();
         });
     }

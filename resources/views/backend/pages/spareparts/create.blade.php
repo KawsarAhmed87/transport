@@ -58,6 +58,20 @@
                 <form action="{{ route('admin.spareparts.store') }}" method="POST" autocomplete="off">
                   @csrf
                   <div class="form-row">
+                    <div class="form-group col-md-12 col-sm-12">
+                        <label for="name">Spare parts name<span class="required"> *</span></label>
+                        <select class="form-control" name="parent_id">
+                          <option value="">Select</option>
+                          @foreach($servicetypes as $data)
+                          <option value="{{$data->id}}">{{$data->name}}</option>
+                          @endforeach
+                          
+
+                        </select>
+                    </div>
+                </div>
+
+                  <div class="form-row">
                       <div class="form-group col-md-12 col-sm-12">
                           <label for="name">Spare parts name<span class="required"> *</span></label>
                           <input type="text" class="form-control" id="name" name="name" placeholder="Enter Spare parts name">
