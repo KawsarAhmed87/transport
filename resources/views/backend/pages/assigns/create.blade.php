@@ -51,10 +51,8 @@
             
 
             <div class="card">
-      
               <!-- /.card-header -->
               <div class="card-body">
-              
                 <form action="{{ route('admin.assigns.store') }}" method="POST" autocomplete="off">
                   @csrf
                   <table class="table table-bordered">
@@ -64,7 +62,9 @@
                         <select class="form-control select2" name="vehicle_id">
                           <option value="">Select</option>
                           @foreach($vehicles as $data)
-                          <option value="{{$data->id}}">{{$data->registration}}</option>
+                          <?php $active = DB::table('assigns')->where('status', 'Active')->where('vehicle_id', $data->id)->select('vehicle_id')->first(); ?>
+                          <option value="{{$data->id}}" {{$active->vehicle_id}}>{{$data->registration}}</option>
+
                           @endforeach
                         </select>
                       </td>

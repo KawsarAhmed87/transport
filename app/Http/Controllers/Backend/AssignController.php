@@ -49,15 +49,7 @@ class AssignController extends Controller
             abort(403, 'Sorry !! You are unauthorized to create any assign !');
         }
         $divisions = Division::all();
-        $vehicles = DB::table('vehicles')
-            ->leftJoin('assigns', 'vehicles.id', '=', 'assigns.vehicle_id')
-            ->where('assigns.vehicle_id', null)
-            ->orwhere('assigns.status', 'like', '%' . 'Inactive' . '%')
-            ->where('assigns.status', '!=', 'Active')
-            ->select('vehicles.id', 'vehicles.registration', 'assigns.status')
-            ->distinct()
-            ->get();
-
+        $vehicles = DB::table('vehicles')->get();
         return view('backend.pages.assigns.create', compact('divisions', 'vehicles'));
     }
 
