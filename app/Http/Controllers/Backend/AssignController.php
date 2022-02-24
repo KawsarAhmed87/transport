@@ -49,7 +49,7 @@ class AssignController extends Controller
             abort(403, 'Sorry !! You are unauthorized to create any assign !');
         }
         $divisions = Division::all();
-        $vehicles = DB::table('vehicles')->get();
+        $vehicles = DB::table('vehicles')->where(['status' => 1, 'assign_status' => 0])->get();
         return view('backend.pages.assigns.create', compact('divisions', 'vehicles'));
     }
 
@@ -85,6 +85,8 @@ class AssignController extends Controller
         $data->status = $request->status;
         $data->save();
 
+        DB::table('vehicles')->where('id', $request->vehicle_id)->update(['assign_status' => 1]);
+
         session()->flash('success', 'Vehicle assign has been created !!');
         return redirect()->route('admin.assigns.index');
     }
@@ -114,7 +116,7 @@ class AssignController extends Controller
 
         $assign = Assign::find($id);
         $divisions = Division::all();
-        $vehicles = Vehicle::all();
+        $vehicles = DB::table('vehicles')->where(['status' => 1, 'assign_status' => 0])->orwhere('id', $assign->vehicle_id)->get();
         return view('backend.pages.assigns.edit', compact('assign', 'divisions', 'vehicles'));
     }
 
@@ -152,6 +154,11 @@ class AssignController extends Controller
         $data->status = $request->status;
         $data->update();
 
+        if ($request->status == 'Active') {
+            DB::table('vehicles')->where('id', $request->vehicle_id)->update(['assign_status' => 1]);
+        }else{
+            DB::table('vehicles')->where('id', $request->vehicle_id)->update(['assign_status' => 0]);
+        }
         session()->flash('info', 'Vehicle assign has been updated !!');
         return redirect()->route('admin.assigns.index');
     }
@@ -169,8 +176,13 @@ class AssignController extends Controller
         }
 
         $data = Assign::find($id);
+
         if (!is_null($data)) {
-            $data->delete();
+            $info =DB::table('assigns')->where('id', $data->id)->where('vehicle_id', $data->vehicle_id)->where('status', 'Active')->first();
+            if (!is_null($info)) {
+                DB::table('vehicles')->where('id', $data->vehicle_id)->update(['assign_status' => 0]);
+            }
+            $data->delete();   
         }
 
         session()->flash('delete', 'Vehicle assign has been deleted !!');

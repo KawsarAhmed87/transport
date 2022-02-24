@@ -37,6 +37,8 @@ class CreateVehiclesTable extends Migration
             $table->date('fitness', 30)->nullable();
             $table->date('cylinder', 30)->nullable();
             $table->string('remarks', 150)->nullable();
+            $table->string('status')->default(1);
+            $table->string('assign_status')->default(0);
             $table->timestamps();
         });
     }

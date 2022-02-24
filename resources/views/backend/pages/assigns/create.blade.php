@@ -62,8 +62,7 @@
                         <select class="form-control select2" name="vehicle_id">
                           <option value="">Select</option>
                           @foreach($vehicles as $data)
-                          <?php $active = DB::table('assigns')->where('status', 'Active')->where('vehicle_id', $data->id)->select('vehicle_id')->first(); ?>
-                          <option value="{{$data->id}}" {{$active->vehicle_id}}>{{$data->registration}}</option>
+                          <option value="{{$data->id}}">{{$data->registration}}</option>
 
                           @endforeach
                         </select>
@@ -99,10 +98,7 @@
                       <td width="15%">Status <span class="required">*</span></td>
                       <td width="35%">
                         <select class="form-control" name="status">
-                          <option value="">Select</option>
                           <option value="Active">Active</option>
-                          <option value="Inactive">Inactive</option>
-
                         </select>
                       </td>
                     </tr>
