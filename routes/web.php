@@ -41,4 +41,8 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::resource('assigns', 'Backend\AssignController', ['names' => 'admin.assigns']);
 
+    Route::get('estimate/create', 'Backend\EstimateController@index')->name('admin.estimates.index');
+    Route::get('get-servicetype', 'Backend\EstimateController@servicetype');
+    Route::get('get-spartparts', 'Backend\EstimateController@spare_parts');
+
 });

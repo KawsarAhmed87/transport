@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Model\Assign;
 use App\Model\Division;
-use App\Model\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -144,6 +143,13 @@ class AssignController extends Controller
             'status' => 'required|max:20',
         ]);
 
+        if ($request->status == 'Active') {
+            DB::table('assigns')->where('vehicle_id', $request->vehicle_id)->update(['status' => 'Inactive']);
+            DB::table('vehicles')->where('id', $request->vehicle_id)->update(['assign_status' => 1]);
+        } else {
+            DB::table('vehicles')->where('id', $request->vehicle_id)->update(['assign_status' => 0]);
+        }
+
         $data->division_id = $request->division_id;
         $data->vehicle_id = $request->vehicle_id;
         $data->officer_info = $request->officer_info;
@@ -154,11 +160,6 @@ class AssignController extends Controller
         $data->status = $request->status;
         $data->update();
 
-        if ($request->status == 'Active') {
-            DB::table('vehicles')->where('id', $request->vehicle_id)->update(['assign_status' => 1]);
-        }else{
-            DB::table('vehicles')->where('id', $request->vehicle_id)->update(['assign_status' => 0]);
-        }
         session()->flash('info', 'Vehicle assign has been updated !!');
         return redirect()->route('admin.assigns.index');
     }
@@ -178,11 +179,11 @@ class AssignController extends Controller
         $data = Assign::find($id);
 
         if (!is_null($data)) {
-            $info =DB::table('assigns')->where('id', $data->id)->where('vehicle_id', $data->vehicle_id)->where('status', 'Active')->first();
+            $info = DB::table('assigns')->where('id', $data->id)->where('vehicle_id', $data->vehicle_id)->where('status', 'Active')->first();
             if (!is_null($info)) {
                 DB::table('vehicles')->where('id', $data->vehicle_id)->update(['assign_status' => 0]);
             }
-            $data->delete();   
+            $data->delete();
         }
 
         session()->flash('delete', 'Vehicle assign has been deleted !!');
