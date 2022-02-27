@@ -100,15 +100,20 @@
                     <option v-for='data in servicetypes' :value='data.id'>@{{ data.name }}</option>
                   </select>
               </div>
-              
+              <form action="{{route('admin.addCartParts')}}" method="POST">
+                @csrf
               <div class="form-group">
                   <label>Select Spare Parts:</label>
-                  <select class='form-control' v-model='sparepart'>
+                  <select class='form-control' v-model='sparepart' name="spare_parts_id">
                     <option value='0'>Select</option>
                     <option v-for='data in spareparts' :value='data.id'>@{{ data.name }}</option>
                   </select>
               </div>
-
+              <div class="form-group">
+                <button type="submit" class="form-control">Add</button>
+                
+            </div>
+            </form>
 
               </div>
               <!-- /.card-body -->
@@ -124,14 +129,29 @@
               <!-- /.card-header -->
               <div class="card-body">
               
-                <form action="{{ route('admin.brands.store') }}" method="POST" autocomplete="off">
+                <form action="" method="POST" autocomplete="off">
                   @csrf
-                  <div class="form-row">
-                      <div class="form-group col-md-12 col-sm-12">
-                          <label for="name">Brand name<span class="required"> *</span></label>
-                          <input type="text" class="form-control" id="name" name="name" placeholder="Enter Brand name">
-                      </div>
-                  </div>
+                  <table class="table table-bordered">
+                    <tr>
+                      <th>SL</th>
+                      <th>Service</th>
+                      <th>Parts</th>
+                      <th>Qty</th>
+                      <th>Value</th>
+                      <th>Del</th>
+                    </tr>
+                    
+                    <tr v-for='data in cartParts'>
+                   
+                      <td>1</td>
+                      <td>@{{data.price}}</td>
+                      <td>@{{data.name}}</td>
+                      <td>@{{data.quantity}}</td>
+                      <td>@{{data.service}}</td>
+                      <td style="color: red">X</td>
+                    </tr>
+
+                  </table>
 
               
                   
@@ -172,6 +192,7 @@ var app = new Vue({
           return {
               servicetype: 0,
               servicetypes: [],
+              cartParts: [],
               sparepart: 0,
               spareparts: []
           }
@@ -192,10 +213,20 @@ var app = new Vue({
             }).then(function(response){
                   this.spareparts = response.data;
               }.bind(this));
+          },
+
+          getCartParts: function(){
+            axios.get('/admin/get-cart-parts')
+            .then(function (response) {
+               this.cartParts = response.data;
+            }.bind(this));
+       
           }
+
       },
       created: function(){
           this.getServiceType()
+          this.getCartParts()
       }
 })
 

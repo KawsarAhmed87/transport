@@ -6,14 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Model\Sparepart;
 use Darryldecode\Cart\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EstimateController extends Controller
 {
     public function index()
     {
 
-        $info = \Cart::getContent();
-        return view('backend.pages.estimates.create', compact('info'));
+        return view('backend.pages.estimates.create');
     }
 
     public function servicetype()
@@ -27,6 +27,30 @@ class EstimateController extends Controller
         $get_spartparts = Sparepart::where('parent_id', $request->servicetype_id)->get();
 
         return response()->json($get_spartparts);
+    }
+
+    public function cart_spare_parts(Request $request)
+    {
+        $data = DB::table('spareparts')->where('id', $request->spare_parts_id)->first();
+
+        \Cart::add([
+            'id' => $data->id,
+            'name' => $data->name,
+            'price' => $data->parent_id,
+            'quantity' => 1,
+            'attributes' => array(
+                'service' => "Yes",
+            ),
+        ]);
+
+        return back();
+    }
+
+    public function get_cart_spare_parts()
+    {
+        $data = \Cart::getContent();
+
+        return response()->json($data);
     }
 
 }
