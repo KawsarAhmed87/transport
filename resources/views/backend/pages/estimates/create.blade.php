@@ -143,12 +143,16 @@
                     
                     <tr v-for='data in cartParts'>
                    
-                      <td>1</td>
+                      <td>@{{data.id}}</td>
                       <td>@{{data.price}}</td>
                       <td>@{{data.name}}</td>
                       <td>@{{data.quantity}}</td>
-                      <td>@{{data.service}}</td>
-                      <td style="color: red">X</td>
+                      <td><input name="price" class="form-control"/></td>
+                      <td style="color: red">
+                        <button type="button" class="btn btn-sm btn-danger">
+                          X
+                        </button>
+                      </td>
                     </tr>
 
                   </table>
