@@ -90,8 +90,7 @@
             <div class="card">
       
               <!-- /.card-header -->
-              <div class="card-body">
-          
+              <div class="card-body">          
                 <div class="form-group">
                   <label>Select Service:</label>
                   <select class='form-control' v-model='servicetype' @change='getSpareParts()'>
