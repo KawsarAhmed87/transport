@@ -63,10 +63,6 @@
                             <input type="text" class="form-control" id="name" name="name" placeholder="Enter Brand name">
                         </div>
                     </div>
-
-                    
-
-                    
                 </form>
                 </div>
                 <!-- /.card-body -->
@@ -98,7 +94,7 @@
                     <option v-for='data in servicetypes' :value='data.id'>@{{ data.name }}</option>
                   </select>
               </div>
-              <form action="{{route('admin.addCartParts')}}" method="POST">
+              <form @submit.prevent="addCart">
                 @csrf
               <div class="form-group">
                   <label>Select Spare Parts:</label>
@@ -108,8 +104,11 @@
                   </select>
               </div>
               <div class="form-group">
-                <button type="submit" class="form-control">Add</button>
-                
+                <label>Price </label>
+                <input type="text" v-model='price'/>
+            </div>
+              <div class="form-group">
+                <button type="submit" class="form-control">Add</button>  
             </div>
             </form>
 
@@ -135,7 +134,8 @@
                       <th>Service</th>
                       <th>Parts</th>
                       <th>Qty</th>
-                      <th>Value</th>
+                      <th>Rate</th>
+                      <th>Sub Total</th>
                       <th>Del</th>
                     </tr>
                     
@@ -145,7 +145,8 @@
                       <td>@{{data.price}}</td>
                       <td>@{{data.name}}</td>
                       <td>@{{data.quantity}}</td>
-                      <td><input name="price" class="form-control"/></td>
+                      <td>@{{data.price}}</td>
+                      <td>@{{data.price*data.quantity}}</td>
                       <td style="color: red">
                         <button type="button" class="btn btn-sm btn-danger">
                           X
@@ -196,7 +197,8 @@ var app = new Vue({
               servicetypes: [],
               cartParts: [],
               sparepart: 0,
-              spareparts: []
+              spareparts: [],
+              price: ''
           }
   },
   methods:{
@@ -216,6 +218,16 @@ var app = new Vue({
                   this.spareparts = response.data;
               }.bind(this));
           },
+
+          addCart(){
+               var data = {spare_parts_id:this.sparepart, price:this.price}
+
+              axios.post('/admin/add-cart-spareparts',data)
+              .then(function (response) {
+                this.getCartParts()
+              }.bind(this));
+
+            },
 
           getCartParts: function(){
             axios.get('/admin/get-cart-parts')

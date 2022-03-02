@@ -36,7 +36,7 @@ class EstimateController extends Controller
         \Cart::add([
             'id' => $data->id,
             'name' => $data->name,
-            'price' => $data->parent_id,
+            'price' => $request->price,
             'quantity' => 1,
             'attributes' => array(
                 'service' => "Yes",
