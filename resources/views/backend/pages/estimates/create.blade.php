@@ -58,10 +58,22 @@
                   <form action="{{ route('admin.brands.store') }}" method="POST" autocomplete="off">
                     @csrf
                     <div class="form-row">
-                        <div class="form-group col-md-12 col-sm-12">
-                            <label for="name">Brand name<span class="required"> *</span></label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter Brand name">
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label for="name">Vehicle Reg:<span class="required"> *</span></label>
+                            <select class='form-control'>
+                              <option value='0' >Service Type</option>
+                              <option v-for='data in servicetypes' :value='data.id'>@{{ data.name }}</option>
+                            </select>
+                            
                         </div>
+                        <div class="form-group col-md-4 col-sm-4">
+                          <label for="name">Date<span class="required"> *</span></label>
+                          <input type="date" class="form-control" id="name" name="name" placeholder="Enter Brand name">
+                      </div>
+                      <div class="form-group col-md-4 col-sm-4">
+                        <label for="name">Work Order</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter Brand name">
+                    </div>
                     </div>
                 </form>
                 </div>
@@ -105,10 +117,10 @@
               </div>
               <div class="form-group">
                 <label>Price </label>
-                <input type="text" v-model='price'/>
+                <input type="text" class="form-control" v-model='price'/>
             </div>
               <div class="form-group">
-                <button type="submit" class="form-control">Add</button>  
+                <button type="submit" class="form-control btn btn-success btn-sm">Add to list</button>  
             </div>
             </form>
 
@@ -142,17 +154,18 @@
                     <tr v-for='data in cartParts'>
                    
                       <td>@{{data.id}}</td>
-                      <td>@{{data.price}}</td>
+                      <td>@{{data.attributes.service}}</td>
                       <td>@{{data.name}}</td>
                       <td>@{{data.quantity}}</td>
                       <td>@{{data.price}}</td>
                       <td>@{{data.price*data.quantity}}</td>
                       <td style="color: red">
-                        <button type="button" class="btn btn-sm btn-danger">
+                        <button  class="btn btn-sm btn-danger" @click.prevent="removeIdCart(data.id)">
                           X
                         </button>
                       </td>
                     </tr>
+                    <tr></tr>
 
                   </table>
 
@@ -235,6 +248,12 @@ var app = new Vue({
                this.cartParts = response.data;
             }.bind(this));
        
+          },
+          removeIdCart: function(id){
+            axios.get('/admin/delete-id-cart-spareparts/'+id)
+              .then(function (response) {
+                this.getCartParts()
+              }.bind(this));
           }
 
       },

@@ -46,5 +46,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('get-spartparts', 'Backend\EstimateController@spare_parts');
     Route::get('/get-cart-parts', 'Backend\EstimateController@get_cart_spare_parts');
     Route::post('add-cart-spareparts', 'Backend\EstimateController@cart_spare_parts')->name('admin.addCartParts');
+    Route::get('delete-id-cart-spareparts/{id}', 'Backend\EstimateController@delete_id_cart_parts');
 
 });

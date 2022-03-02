@@ -43,13 +43,18 @@ class EstimateController extends Controller
             ),
         ]);
 
-        return back();
     }
 
     public function get_cart_spare_parts()
     {
         $data = \Cart::getContent();
 
+        return response()->json($data);
+    }
+
+    public function delete_id_cart_parts($id)
+    {
+        $data = \Cart::remove($id);
         return response()->json($data);
     }
 
